@@ -73,7 +73,7 @@
 
   <!-- Header da Aplicação -->
   <header class="bg-emerald-900 text-white shadow-md z-10 sticky top-0">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <div class="w-11 h-11 rounded-full bg-slate-900 border-2 border-amber-400 overflow-hidden shadow flex items-center justify-center shrink-0">
           <img src="logo.jpg" alt="Logo Miter Táxi" class="w-full h-full object-cover">
@@ -103,92 +103,10 @@
     </button>
   </div>
 
-  <!-- Container Principal -->
-  <main class="flex-1 max-w-6xl w-full mx-auto p-2 sm:p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 overflow-hidden">
+  <!-- Container Principal: Central de Atendimento Centralizada -->
+  <main class="flex-1 max-w-4xl w-full mx-auto p-2 sm:p-4 md:p-6 flex flex-col overflow-hidden">
    
-    <!-- Painel Esquerdo: Cotar & Agendar Viagem -->
-    <section class="lg:col-span-5 bg-white rounded-2xl shadow-lg border border-slate-200/80 flex flex-col overflow-hidden">
-      <div class="bg-slate-800 text-white p-4 border-b border-slate-700 flex items-center justify-between">
-        <h2 class="font-bold text-base flex items-center gap-2">
-          <i class="fa-solid fa-calendar-check text-amber-400"></i>
-          Cotar & Agendar Viagem
-        </h2>
-        <span class="text-xs bg-amber-400/20 text-amber-300 font-medium px-2 py-0.5 rounded-full">Agendamento Direto</span>
-      </div>
-
-      <div class="p-4 sm:p-5 flex-1 overflow-y-auto space-y-4">
-        <!-- Origem -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Ponto de Partida / Origem</label>
-          <input type="text" id="origem" placeholder="Ex: Savassi - BH, Betim, Confins..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition">
-        </div>
-
-        <!-- Destino -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Destino Final *</label>
-          <input type="text" id="destino" placeholder="Ex: Aeroporto de Confins, Ouro Preto, Centro..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition">
-        </div>
-
-        <!-- Dia e Horário -->
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Data da Viagem *</label>
-            <input type="date" id="dataViagem" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 transition">
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Horário *</label>
-            <input type="time" id="horarioViagem" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 transition">
-          </div>
-        </div>
-
-        <!-- Tipo de Serviço e Pagamento -->
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Tipo de Serviço</label>
-            <select id="tipoServico" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 transition">
-              <option value="Corrida Urbana (BH / RMBH)">Corrida Urbana (BH/RMBH)</option>
-              <option value="Aeroporto de Confins">Aeroporto de Confins</option>
-              <option value="Viagem Interior de MG">Viagem Interior de MG</option>
-              <option value="Atendimento Corporativo Faturado">Corporativo / Faturado</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Pagamento</label>
-            <select id="formaPagamento" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 transition">
-              <option value="Pix">Pix</option>
-              <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
-              <option value="Faturamento Mensal (CNPJ)">Faturamento (CNPJ)</option>
-              <option value="Dinheiro">Dinheiro</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Observações -->
-        <div>
-          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Observações (Nº Passageiros, Malas, Pet)</label>
-          <textarea id="observacoes" rows="2" placeholder="Ex: 2 passageiros, 3 malas grandes, preciso de nota fiscal..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition"></textarea>
-        </div>
-
-        <!-- Informação do Motorista -->
-        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-center gap-3">
-          <i class="fa-solid fa-user-check text-amber-600 text-lg"></i>
-          <div>
-            <p class="font-bold text-slate-800">Motorista Profissional: Clenilson Miter</p>
-            <p class="text-[11px] text-slate-600">Atendimento personalizado com segurança, pontualidade e conforto.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-4 bg-slate-50 border-t border-slate-200">
-        <button onclick="solicitarViaWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2 text-sm sm:text-base">
-          <i class="fa-brands fa-whatsapp text-xl"></i>
-          Enviar Agendamento via WhatsApp
-        </button>
-      </div>
-    </section>
-
-    <!-- Painel Direito: Central de Atendimento Automático -->
-    <section class="lg:col-span-7 bg-white rounded-2xl shadow-lg border border-slate-200/80 flex flex-col h-[600px] lg:h-auto overflow-hidden">
+    <section class="bg-white rounded-2xl shadow-lg border border-slate-200/80 flex flex-col flex-1 h-full overflow-hidden">
      
       <!-- Topo do Chat -->
       <div class="bg-emerald-800 text-white p-3.5 flex items-center justify-between border-b border-emerald-900 shadow-sm">
@@ -214,10 +132,13 @@
       <!-- Mensagens do Chat -->
       <div id="chatMessages" class="flex-1 p-4 overflow-y-auto chat-bg space-y-3 text-sm"></div>
 
-      <!-- Atalhos Rápidos Informativos -->
+      <!-- Atalhos Rápidos Informativos & Ação de Cotar/Agendar -->
       <div class="p-2 bg-slate-100 border-t border-slate-200">
-        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-2 mb-1">Atalhos Frequentes (Clique para ver informações):</p>
+        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-2 mb-1">Atalhos Frequentes:</p>
         <div class="flex flex-wrap gap-1.5">
+          <button onclick="abrirModalAgendamento()" class="bg-amber-400 hover:bg-amber-500 text-slate-900 border border-amber-500 px-3 py-1 rounded-full text-xs transition font-extrabold shadow-sm flex items-center gap-1">
+            🚖 Cotar & Agendar Viagem
+          </button>
           <button onclick="selecionarOpcaoMenu('1')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
             📍 Cobertura BH & RMBH
           </button>
@@ -233,14 +154,14 @@
           <button onclick="selecionarOpcaoMenu('5')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
             💳 Formas de Pagamento
           </button>
-          <button onclick="selecionarOpcaoMenu('10')" class="bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 px-2.5 py-1 rounded-full text-xs transition font-bold shadow-sm">
+          <button onclick="selecionarOpcaoMenu('10')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
             📅 Reserva com Antecedência
           </button>
           <button onclick="selecionarOpcaoMenu('6')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
             🕒 Como Funciona Agendamento
           </button>
           <button onclick="selecionarOpcaoMenu('7')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
-            🧳 Bagagem & Transporte Pets
+            🧳 Bagagem & Pets
           </button>
           <button onclick="selecionarOpcaoMenu('8')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
             📄 Recibo & Nota Fiscal
@@ -253,7 +174,7 @@
 
       <!-- Campo de Entrada -->
       <div class="p-3 bg-slate-200 border-t border-slate-300 flex items-center gap-2">
-        <input type="text" id="userInput" placeholder="Digite um número de 1 a 10 ou faça sua pergunta..." onkeypress="handleKeyPress(event)" class="flex-1 bg-white border border-slate-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner">
+        <input type="text" id="userInput" placeholder="Digite um número de 1 a 11 ou faça sua pergunta..." onkeypress="handleKeyPress(event)" class="flex-1 bg-white border border-slate-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner">
         <button onclick="enviarMensagemUsuario()" class="bg-emerald-700 hover:bg-emerald-800 text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-md shrink-0">
           <i class="fa-solid fa-paper-plane text-sm"></i>
         </button>
@@ -262,6 +183,85 @@
     </section>
 
   </main>
+
+  <!-- Modal Interativo de Agendamento/Cotação de Viagem -->
+  <div id="modalAgendamento" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="bg-slate-800 text-white p-4 flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <i class="fa-solid fa-calendar-check text-amber-400"></i>
+          Cotar & Agendar Viagem
+        </h3>
+        <button onclick="fecharModalAgendamento()" class="text-slate-400 hover:text-white transition text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Ponto de Partida / Origem</label>
+          <input type="text" id="modalOrigem" placeholder="Ex: Savassi - BH, Betim, Confins..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Destino Final *</label>
+          <input type="text" id="modalDestino" placeholder="Ex: Aeroporto de Confins, Ouro Preto, Centro..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Data da Viagem *</label>
+            <input type="date" id="modalDataViagem" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 transition">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Horário *</label>
+            <input type="time" id="modalHorarioViagem" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 transition">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Tipo de Serviço</label>
+            <select id="modalTipoServico" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 transition">
+              <option value="Corrida Urbana (BH / RMBH)">Corrida Urbana (BH/RMBH)</option>
+              <option value="Aeroporto de Confins">Aeroporto de Confins</option>
+              <option value="Viagem Interior de MG">Viagem Interior de MG</option>
+              <option value="Atendimento Corporativo Faturado">Corporativo / Faturado</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Pagamento</label>
+            <select id="modalFormaPagamento" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 transition">
+              <option value="Pix">Pix</option>
+              <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
+              <option value="Faturamento Mensal (CNPJ)">Faturamento (CNPJ)</option>
+              <option value="Dinheiro">Dinheiro</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Observações (Nº Passageiros, Malas, Pet)</label>
+          <textarea id="modalObservacoes" rows="2" placeholder="Ex: 2 passageiros, 3 malas grandes, preciso de nota fiscal..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition"></textarea>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex items-center gap-3">
+          <i class="fa-solid fa-user-check text-amber-600 text-lg"></i>
+          <div>
+            <p class="font-bold text-slate-800">Motorista Profissional: Clenilson Miter</p>
+            <p class="text-[11px] text-slate-600">Atendimento personalizado com segurança, pontualidade e conforto.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-slate-50 border-t border-slate-200">
+        <button onclick="solicitarViaWhatsAppModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2 text-sm sm:text-base">
+          <i class="fa-brands fa-whatsapp text-xl"></i>
+          Enviar Agendamento via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
 
   <footer class="bg-slate-900 text-slate-400 text-xs py-3 text-center border-t border-slate-800">
     <p>Central de Atendimento ao Cliente • <strong>Miter Táxi Corporativo</strong> • Motorista: <strong>Clenilson Miter</strong> • (31) 98428-0227</p>
@@ -275,8 +275,9 @@
 Atendemos **Belo Horizonte, Região Metropolitana e todas as cidades de Minas Gerais**.
 👨‍✈️ *Motorista Oficial:* Clenilson Miter
 
-Digite o **número** ou clique no atalho para ver as informações desejadas:
+Digite o **número** ou clique no atalho para ver as informações ou realizar o agendamento:
 
+1️⃣1️⃣ **Cotar & Agendar Viagem** (Abrir Formulário)
 1️⃣ **Corridas em BH e Região Metropolitana**
 2️⃣ **Translado para Aeroporto de Confins / Pampulha**
 3️⃣ **Viagens para Cidades do Interior de Minas Gerais**
@@ -295,17 +296,18 @@ Digite o **número** ou clique no atalho para ver as informações desejadas:
       "3": `🛣️ *Viagens para Cidades do Interior de MG*\n\nTransporte intermunicipal seguro e confortável para **qualquer cidade de Minas Gerais** (Ouro Preto, Ipatinga, Juiz de Fora, Montes Claros, Divinópolis, Pouso Alegre, Governador Valadares, Uberlândia, etc.).\n\n• Tarifas corporativas diferenciadas para longas distâncias.\n• Veículo revisado e equipado para viagens rodoviárias.`,
       "4": `🏢 *Faturamento Mensal para Empresas (CNPJ)*\n\nOferecemos modalidade de **faturamento quinzenal ou mensal** para sua empresa, com relatórios detalhados contendo datas, horários, passageiros e itinerários praticados.\n\nPara solicitar o cadastro da sua empresa, entre em contato diretamente com o motorista Clenilson Miter pelo WhatsApp.`,
       "5": `💳 *Formas de Pagamento Aceitas*\n\n• **Pix** (Chave fornecida no final da viagem)\n• **Cartões de Crédito e Débito** (Todas as bandeiras)\n• **Faturamento Empresarial** (Via boleto/fatura para empresas cadastradas)\n• **Dinheiro**`,
-      "6": `🕒 *Como Funciona o Agendamento Prévio*\n\nO agendamento garante um veículo reservado exclusivamente no horário e local combinados.\n\nBasta utilizar o formulário **Cotar & Agendar Viagem** ao lado informando a Origem, Destino, Data e Horário e clicar no botão de envio para confirmar pelo WhatsApp!`,
+      "6": `🕒 *Como Funciona o Agendamento Prévio*\n\nO agendamento garante um veículo reservado exclusivamente no horário e local combinados.\n\nBasta clicar na opção **"🚖 Cotar & Agendar Viagem"** nos atalhos para abrir o formulário rápido de envio direto para o WhatsApp do motorista!`,
       "7": `🧳 *Bagagens e Transporte de Pets*\n\n• **Porta-malas amplo** para malas grandes, caixas de ferramentas e equipamentos corporativos.\n• **Pet Friendly:** Aceitamos animais de estimação de pequeno e médio porte (preferencialmente em caixas de transporte ou com proteção).`,
       "8": `📄 *Comprovação de Viagem*\n\nPara sua prestação de contas corporativa ou reembolso:\n• Fornecemos **recibo impresso ou digital instantâneo**.\n• Emissão de **Nota Fiscal Corporativa** do serviço.`,
       "9": `👤 *Atendimento Direto com o Motorista*\n\nPara esclarecer dúvidas personalizadas ou falar direto com o motorista **Clenilson Miter**, chame no WhatsApp oficial: **(31) 98428-0227**.`,
-      "10": `📅 *Reserva com Antecedência*\n\nVocê pode agendar suas viagens com **dias ou semanas de antecedência** para compromissos corporativos, voos de madrugada ou viagens longas.\n\nPara efetuar sua reserva, preencha os dados do formulário ao lado ou envie uma mensagem direta informando dia e horário desejados!`
+      "10": `📅 *Reserva com Antecedência*\n\nVocê pode agendar suas viagens com **dias ou semanas de antecedência** para compromissos corporativos, voos de madrugada ou viagens longas.\n\nClique no botão **"🚖 Cotar & Agendar Viagem"** para preencher os dados e realizar sua reserva!`,
+      "11": `🚖 *Cotar & Agendar Viagem*\n\nAbrindo o formulário de agendamento... Por favor, preencha as informações na janela que apareceu na sua tela.`
     };
 
     window.onload = function() {
       const hoje = new Date();
       const dataFormatada = hoje.toISOString().split('T')[0];
-      document.getElementById("dataViagem").value = dataFormatada;
+      document.getElementById("modalDataViagem").value = dataFormatada;
 
       reiniciarChat();
     };
@@ -367,6 +369,12 @@ Digite o **número** ou clique no atalho para ver as informações desejadas:
     function processarRespostaBot(mensagem) {
       const textoLimpo = mensagem.trim().toLowerCase();
 
+      if (textoLimpo === "11" || textoLimpo.includes("cotar") || textoLimpo.includes("agendar")) {
+        adicionarMensagem(RESPOSTAS_MENU["11"], "bot");
+        abrirModalAgendamento();
+        return;
+      }
+
       if (RESPOSTAS_MENU[textoLimpo]) {
         adicionarMensagem(RESPOSTAS_MENU[textoLimpo], "bot");
         return;
@@ -382,7 +390,7 @@ Digite o **número** ou clique no atalho para ver as informações desejadas:
         adicionarMensagem(RESPOSTAS_MENU["4"], "bot");
       } else if (textoLimpo.includes("pagamento") || textoLimpo.includes("pix") || textoLimpo.includes("cartao") || textoLimpo.includes("cartão")) {
         adicionarMensagem(RESPOSTAS_MENU["5"], "bot");
-      } else if (textoLimpo.includes("agendamento") || textoLimpo.includes("horario") || textoLimpo.includes("agendar")) {
+      } else if (textoLimpo.includes("agendamento") || textoLimpo.includes("horario")) {
         adicionarMensagem(RESPOSTAS_MENU["6"], "bot");
       } else if (textoLimpo.includes("bagagem") || textoLimpo.includes("mala") || textoLimpo.includes("pet") || textoLimpo.includes("cachorro")) {
         adicionarMensagem(RESPOSTAS_MENU["7"], "bot");
@@ -393,7 +401,7 @@ Digite o **número** ou clique no atalho para ver as informações desejadas:
       } else if (textoLimpo.includes("bh") || textoLimpo.includes("bairro") || textoLimpo.includes("contagem") || textoLimpo.includes("betim")) {
         adicionarMensagem(RESPOSTAS_MENU["1"], "bot");
       } else {
-        adicionarMensagem(`Desculpe, não entendi perfeitamente. Digite um **número de 1 a 10** do menu para ver as informações de atendimento.`, "bot");
+        adicionarMensagem(`Desculpe, não entendi perfeitamente. Digite um **número de 1 a 11** do menu para ver as informações de atendimento.`, "bot");
       }
     }
 
@@ -403,18 +411,27 @@ Digite o **número** ou clique no atalho para ver as informações desejadas:
       }
     }
 
-    function solicitarViaWhatsApp() {
-      const destino = document.getElementById("destino").value.trim();
-      const dataViagemRaw = document.getElementById("dataViagem").value;
-      const horarioViagem = document.getElementById("horarioViagem").value;
-      const origem = document.getElementById("origem").value.trim() || "A combinar / Não informada";
-      const tipo = document.getElementById("tipoServico").value;
-      const formaPagamento = document.getElementById("formaPagamento").value;
-      const obs = document.getElementById("observacoes").value.trim() || "Nenhuma";
+    // Modal de Agendamento
+    function abrirModalAgendamento() {
+      document.getElementById("modalAgendamento").classList.remove("hidden");
+    }
+
+    function fecharModalAgendamento() {
+      document.getElementById("modalAgendamento").classList.add("hidden");
+    }
+
+    function solicitarViaWhatsAppModal() {
+      const destino = document.getElementById("modalDestino").value.trim();
+      const dataViagemRaw = document.getElementById("modalDataViagem").value;
+      const horarioViagem = document.getElementById("modalHorarioViagem").value;
+      const origem = document.getElementById("modalOrigem").value.trim() || "A combinar / Não informada";
+      const tipo = document.getElementById("modalTipoServico").value;
+      const formaPagamento = document.getElementById("modalFormaPagamento").value;
+      const obs = document.getElementById("modalObservacoes").value.trim() || "Nenhuma";
 
       if (!destino) {
         alert("Por favor, preencha o campo 'Destino Final' para enviar a solicitação.");
-        document.getElementById("destino").focus();
+        document.getElementById("modalDestino").focus();
         return;
       }
 
@@ -442,13 +459,14 @@ Digite o **número** ou clique no atalho para ver as informações desejadas:
 _Mensagem gerada pelo aplicativo Miter Táxi Corporativo._`;
 
       const urlWhatsApp = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensagemWhatsApp)}`;
+      fecharModalAgendamento();
       window.open(urlWhatsApp, '_blank');
     }
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swCode = `
-          const CACHE_NAME = 'miter-taxi-v4';
+          const CACHE_NAME = 'miter-taxi-v5';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
