@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full bg-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miter Táxi Corporativo - Atendimento ao Cliente</title>
+ 
+  <!-- Configurações PWA e Mobile -->
+  <meta name="theme-color" content="#064e3b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Miter Táxi">
+  <link rel="apple-touch-icon" href="logo.jpg">
+
+  <!-- Manifest Dinâmico para Instalação PWA -->
+  <script>
+    const manifestJSON = {
+      "name": "Miter Táxi Corporativo",
+      "short_name": "Miter Táxi",
+      "start_url": "./index.html",
+      "display": "standalone",
+      "background_color": "#064e3b",
+      "theme_color": "#064e3b",
+      "orientation": "portrait",
+      "icons": [
+        {
+          "src": "logo.jpg",
+          "sizes": "192x192",
+          "type": "image/jpeg"
+        },
+        {
+          "src": "logo.jpg",
+          "sizes": "512x512",
+          "type": "image/jpeg"
+        }
+      ]
+    };
+    const blob = new Blob([JSON.stringify(manifestJSON)], { type: 'application/json' });
+    const manifestURL = URL.createObjectURL(blob);
+    const link = document.createElement('link');
+    link.rel = 'manifest';
+    link.href = manifestURL;
+    document.head.appendChild(link);
+  </script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ 
+  <style>
+    .chat-bg {
+      background-color: #efeae2;
+      background-image: radial-gradient(#d1c7bd 0.75px, transparent 0.75px);
+      background-size: 12px 12px;
+    }
+    .message-shadow {
+      box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased text-slate-800 select-none">
+
+  <!-- Header da Aplicação com Logo Miter Táxi -->
+  <header class="bg-emerald-900 text-white shadow-md z-10 sticky top-0">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-11 h-11 rounded-full bg-slate-900 border-2 border-amber-400 overflow-hidden shadow flex items-center justify-center shrink-0">
+          <img src="logo.jpg" alt="Logo Miter Táxi" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight">Miter Táxi Corporativo</h1>
+          <p class="text-xs text-emerald-200">BH • RMBH • Minas Gerais</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2 text-xs md:text-sm">
+        <a href="https://wa.me/5531984280227" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-3 py-1.5 rounded-full transition flex items-center gap-2 shadow">
+          <i class="fa-brands fa-whatsapp text-lg text-emerald-200"></i>
+          <span class="hidden sm:inline">WhatsApp Oficial:</span> (31) 98428-0227
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner do PWA para Instalar no Telemóvel -->
+  <div id="pwaInstallBanner" class="hidden bg-amber-400 text-slate-900 px-4 py-2 text-xs font-bold flex items-center justify-between shadow-md">
+    <div class="flex items-center gap-2">
+      <i class="fa-solid fa-mobile-screen text-base"></i>
+      <span>Instale a app do Miter Táxi no seu ecrã principal!</span>
+    </div>
+    <button onclick="instalarPWA()" class="bg-slate-900 text-white px-3 py-1 rounded-full text-xs font-bold shadow hover:bg-slate-800 transition">
+      Instalar App
+    </button>
+  </div>
+
+  <!-- Container Principal -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-2 sm:p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 overflow-hidden">
+   
+    <!-- Painel Esquerdo: Cotação & Agendamento Direto -->
+    <section class="lg:col-span-5 bg-white rounded-2xl shadow-lg border border-slate-200/80 flex flex-col overflow-hidden">
+      <div class="bg-slate-800 text-white p-4 border-b border-slate-700 flex items-center justify-between">
+        <h2 class="font-bold text-base flex items-center gap-2">
+          <i class="fa-solid fa-calculator text-amber-400"></i>
+          Cotar & Agendar Viagem
+        </h2>
+        <span class="text-xs bg-amber-400/20 text-amber-300 font-medium px-2 py-0.5 rounded-full">Orçamento Rápido</span>
+      </div>
+
+      <div class="p-4 sm:p-5 flex-1 overflow-y-auto space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Tipo de Transporte</label>
+          <select id="tipoServico" onchange="calcularEstimativa()" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition">
+            <option value="urbano">Corrida Urbana (BH e RMBH)</option>
+            <option value="confins">Translado Aeroporto de Confins (CNF)</option>
+            <option value="pampulha">Translado Aeroporto da Pampulha</option>
+            <option value="interior">Viagem para Cidades do Interior (MG)</option>
+            <option value="faturamento">Atendimento Corporativo / Faturado</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Origem (Bairro ou Cidade)</label>
+            <input type="text" id="origem" placeholder="Ex: Savassi, BH / Betim / Contagem" oninput="calcularEstimativa()" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Destino Final</label>
+            <input type="text" id="destino" placeholder="Ex: Aeroporto Confins / Ouro Preto / Centro" oninput="calcularEstimativa()" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Data / Hora</label>
+            <input type="datetime-local" id="dataHora" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 transition">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Pagamento</label>
+            <select id="formaPagamento" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition">
+              <option value="Pix">Pix (Instantâneo)</option>
+              <option value="Cartão de Crédito/Débito">Cartão de Crédito / Débito</option>
+              <option value="Faturamento Mensal (Empresas)">Faturamento Mensal (CNPJ)</option>
+              <option value="Dinheiro">Dinheiro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 space-y-2 text-xs text-amber-900">
+          <div class="flex items-center justify-between font-bold text-sm text-slate-800 border-b border-amber-200/60 pb-1.5">
+            <span>Estimativa de Atendimento</span>
+            <span id="valorEstimado" class="text-emerald-700 font-extrabold text-base">Consulte no Zap</span>
+          </div>
+          <p id="detalheEstimativa" class="leading-relaxed">
+            Informe a origem e o destino para gerar os dados de agendamento corporativo.
+          </p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Observações (Passageiros, Bagagem, CNPJ)</label>
+          <textarea id="observacoes" rows="2" placeholder="Ex: Preciso de recibo impresso, 2 malas grandes, faturamento para a empresa..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 transition"></textarea>
+        </div>
+      </div>
+
+      <div class="p-4 bg-slate-50 border-t border-slate-200">
+        <button onclick="solicitarViaWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2 text-sm sm:text-base">
+          <i class="fa-brands fa-whatsapp text-xl"></i>
+          Solicitar Corrida via WhatsApp
+        </button>
+      </div>
+    </section>
+
+    <!-- Painel Direito: Chat Automático / Central de Atendimento -->
+    <section class="lg:col-span-7 bg-white rounded-2xl shadow-lg border border-slate-200/80 flex flex-col h-[600px] lg:h-auto overflow-hidden">
+     
+      <!-- Topo do Chat Estilo WhatsApp com Logo -->
+      <div class="bg-emerald-800 text-white p-3.5 flex items-center justify-between border-b border-emerald-900 shadow-sm">
+        <div class="flex items-center space-x-3">
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full bg-slate-900 border-2 border-white overflow-hidden shadow flex items-center justify-center">
+              <img src="logo.jpg" alt="Logo Miter Táxi" class="w-full h-full object-cover">
+            </div>
+            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-emerald-800 rounded-full"></span>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm leading-tight">Central de Atendimento Miter Táxi</h3>
+            <p class="text-[11px] text-emerald-200 flex items-center gap-1">
+              <i class="fa-solid fa-clock text-[9px]"></i> Resposta Automática Instantânea
+            </p>
+          </div>
+        </div>
+        <button onclick="reiniciarChat()" class="text-xs bg-emerald-700/60 hover:bg-emerald-700 text-emerald-100 px-2.5 py-1.5 rounded-lg transition border border-emerald-600 flex items-center gap-1">
+          <i class="fa-solid fa-rotate-right"></i> Reiniciar
+        </button>
+      </div>
+
+      <!-- Container de Mensagens do Chat -->
+      <div id="chatMessages" class="flex-1 p-4 overflow-y-auto chat-bg space-y-3 text-sm"></div>
+
+      <!-- Atalhos Rápidos -->
+      <div class="p-2 bg-slate-100 border-t border-slate-200">
+        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-2 mb-1">Atalhos Frequentes:</p>
+        <div class="flex flex-wrap gap-1.5">
+          <button onclick="selecionarOpcaoMenu('1')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
+            📍 Bairros em BH & RMBH
+          </button>
+          <button onclick="selecionarOpcaoMenu('2')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
+            ✈️ Aeroporto Confins
+          </button>
+          <button onclick="selecionarOpcaoMenu('3')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
+            🛣️ Viagens Interior MG
+          </button>
+          <button onclick="selecionarOpcaoMenu('4')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
+            🏢 Convenio Empresa
+          </button>
+          <button onclick="selecionarOpcaoMenu('5')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
+            💳 Formas Pagamento
+          </button>
+        </div>
+      </div>
+
+      <!-- Input de Mensagem -->
+      <div class="p-3 bg-slate-200 border-t border-slate-300 flex items-center gap-2">
+        <input type="text" id="userInput" placeholder="Digite um número do menu ou faça uma pergunta..." onkeypress="handleKeyPress(event)" class="flex-1 bg-white border border-slate-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-inner">
+        <button onclick="enviarMensagemUsuario()" class="bg-emerald-700 hover:bg-emerald-800 text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-md shrink-0">
+          <i class="fa-solid fa-paper-plane text-sm"></i>
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 text-xs py-3 text-center border-t border-slate-800">
+    <p>Central de Atendimento ao Cliente • <strong>Miter Táxi Corporativo</strong> • Contato direto: <strong>(31) 98428-0227</strong></p>
+  </footer>
+
+  <script>
+    const NUMERO_WHATSAPP = "5531984280227";
+
+    const MENU_INICIAL = `
+👋 *Olá! Seja bem-vindo ao Miter Táxi.*
+Atendemos **Belo Horizonte, Região Metropolitana e todas as cidades de Minas Gerais**.
+
+Como posso te ajudar hoje? Digite o **número** da opção desejada:
+
+1️⃣ **Corridas em BH e Região Metropolitana**
+2️⃣ **Translado para Aeroporto de Confins / Pampulha**
+3️⃣ **Viagens para Cidades do Interior de Minas Gerais**
+4️⃣ **Faturamento Mensal e Convênios Corporativos (CNPJ)**
+5️⃣ **Formas de Pagamento Aceitas**
+6️⃣ **Falar diretamente no WhatsApp com Atendente**
+`;
+
+    const RESPOSTAS_MENU = {
+      "1": `📍 *Atendimento BH e Região Metropolitana (RMBH)*\n\nCobrimos **100% dos bairros de Belo Horizonte** (Savassi, Centro, Buritis, Pampulha, Belvedere, Mangabeiras, etc.) e cidades vizinhas como **Contagem, Betim, Nova Lima, Lagoa Santa, Vespasiano, Sabará, Ibirité e Santa Luzia**.\n\n✨ *Diferenciais:* Carros novos, ar-condicionado, motoristas experientes e opção de agendamento prévio.`,
+      "2": `✈️ *Translados para Aeroportos (Confins & Pampulha)*\n\nRealizamos viagens pontuais para o **Aeroporto Internacional de Confins (CNF)** e **Aeroporto da Pampulha**.\n\n• Atendimento 24h com agendamento prévio.\n• Acompanhamento de voo e auxílio com bagagens.\n• Emissão de recibo e nota fiscal corporativa.`,
+      "3": `🛣️ *Viagens para Cidades do Interior de MG*\n\nRealizamos transporte intermunicipal para **qualquer cidade de Minas Gerais** (Ouro Preto, Ipatinga, Juiz de Fora, Montes Claros, Divinópolis, Pouso Alegre, Governador Valadares, Uberlândia, etc.).\n\n• Tarifas corporativas diferenciadas para longas distâncias.\n• Veículos higienizados e vistoriados para viagens na rodovia.`,
+      "4": `🏢 *Faturamento Mensal para Empresas (CNPJ)*\n\nOferecemos contrato de **faturamento quinzenal ou mensal** para sua empresa, com relatórios detalhados de centro de custos, passageiros e destinos.\n\nPara cadastrar sua empresa, envie uma mensagem direta para o nosso WhatsApp do setor comercial no botão abaixo.`,
+      "5": `💳 *Formas de Pagamento*\n\nAceitamos as seguintes modalidades:\n• **Pix** (Chave fornecida no final da corrida)\n• **Cartões de Crédito e Débito** (Todas as bandeiras com maquininha no veículo)\n• **Faturamento Empresarial** (Via boleto/fatura para empresas cadastradas)\n• **Dinheiro**`,
+      "6": `📲 *Atendimento Direto no WhatsApp*\n\nNossos atendentes estão a postos para te atender no número **(31) 98428-0227**.`
+    };
+
+    window.onload = function() {
+      const agora = new Date();
+      agora.setMinutes(agora.getMinutes() - agora.getTimezoneOffset());
+      document.getElementById("dataHora").value = agora.toISOString().slice(0, 16);
+      reiniciarChat();
+    };
+
+    function adicionarMensagem(texto, remetente) {
+      const chatMessages = document.getElementById("chatMessages");
+      const isBot = remetente === "bot";
+
+      const msgDiv = document.createElement("div");
+      msgDiv.className = `flex ${isBot ? 'justify-start' : 'justify-end'} mb-1`;
+
+      const msgBubble = document.createElement("div");
+      msgBubble.className = `max-w-[85%] sm:max-w-[75%] rounded-2xl p-3 text-sm message-shadow ${
+        isBot
+          ? 'bg-white text-slate-800 rounded-tl-none border border-slate-200'
+          : 'bg-emerald-700 text-white rounded-tr-none'
+      }`;
+
+      let textoFormatado = texto.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+      textoFormatado = textoFormatado.replace(/\n/g, '<br>');
+
+      const horaAtual = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      msgBubble.innerHTML = `
+        <div>${textoFormatado}</div>
+        <div class="text-[10px] ${isBot ? 'text-slate-400' : 'text-emerald-200'} text-right mt-1 font-mono">${horaAtual}</div>
+      `;
+
+      msgDiv.appendChild(msgBubble);
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function reiniciarChat() {
+      document.getElementById("chatMessages").innerHTML = "";
+      adicionarMensagem(MENU_INICIAL, "bot");
+    }
+
+    function enviarMensagemUsuario() {
+      const input = document.getElementById("userInput");
+      const texto = input.value.trim();
+      if (!texto) return;
+
+      adicionarMensagem(texto, "user");
+      input.value = "";
+
+      setTimeout(() => {
+        processarRespostaBot(texto);
+      }, 400);
+    }
+
+    function selecionarOpcaoMenu(numero) {
+      adicionarMensagem(`Opção ${numero}`, "user");
+      setTimeout(() => {
+        processarRespostaBot(numero);
+      }, 300);
+    }
+
+    function processarRespostaBot(mensagem) {
+      const textoLimpo = mensagem.trim().toLowerCase();
+
+      if (RESPOSTAS_MENU[textoLimpo]) {
+        adicionarMensagem(RESPOSTAS_MENU[textoLimpo], "bot");
+        return;
+      }
+
+      if (textoLimpo.includes("confins") || textoLimpo.includes("aeroporto")) {
+        adicionarMensagem(RESPOSTAS_MENU["2"], "bot");
+      } else if (textoLimpo.includes("interior") || textoLimpo.includes("viagem") || textoLimpo.includes("cidade")) {
+        adicionarMensagem(RESPOSTAS_MENU["3"], "bot");
+      } else if (textoLimpo.includes("empresa") || textoLimpo.includes("faturamento") || textoLimpo.includes("cnpj")) {
+        adicionarMensagem(RESPOSTAS_MENU["4"], "bot");
+      } else if (textoLimpo.includes("pagamento") || textoLimpo.includes("pix") || textoLimpo.includes("cartao") || textoLimpo.includes("cartão")) {
+        adicionarMensagem(RESPOSTAS_MENU["5"], "bot");
+      } else if (textoLimpo.includes("bh") || textoLimpo.includes("bairro") || textoLimpo.includes("contagem") || textoLimpo.includes("betim")) {
+        adicionarMensagem(RESPOSTAS_MENU["1"], "bot");
+      } else {
+        adicionarMensagem(`Desculpe, não entendi perfeitamente. Digite o **número de 1 a 6** do menu para receber as informações sobre o Miter Táxi Corporativo em Minas Gerais.`, "bot");
+      }
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === "Enter") {
+        enviarMensagemUsuario();
+      }
+    }
+
+    function calcularEstimativa() {
+      const tipo = document.getElementById("tipoServico").value;
+      const origem = document.getElementById("origem").value.trim();
+      const destino = document.getElementById("destino").value.trim();
+      const valorEl = document.getElementById("valorEstimado");
+      const detalheEl = document.getElementById("detalheEstimativa");
+
+      if (!origem && !destino) {
+        valorEl.innerText = "Consulte no Zap";
+        detalheEl.innerText = "Informe a origem e o destino para obter uma referência de valor e agendamento.";
+        return;
+      }
+
+      if (tipo === "confins") {
+        valorEl.innerText = "A partir de R$ 130,00";
+        detalheEl.innerText = "Translado executivo para o Aeroporto de Confins com opção de agendamento prévio.";
+      } else if (tipo === "pampulha") {
+        valorEl.innerText = "A partir de R$ 50,00";
+        detalheEl.innerText = "Translado rápido para o Aeroporto da Pampulha saindo de Belo Horizonte.";
+      } else if (tipo === "interior") {
+        valorEl.innerText = "Sob Consulta (Km Fechado)";
+        detalheEl.innerText = "Viagens intermunicipais com valor negociado e tabela diferenciada para longas distâncias em MG.";
+      } else if (tipo === "faturamento") {
+        valorEl.innerText = "Tabela Corporativa";
+        detalheEl.innerText = "Atendimento faturado para empresas com cadastro prévio e emissão de nota fiscal.";
+      } else {
+        valorEl.innerText = "Tarifa de Taxímetro / Fixo";
+        detalheEl.innerText = "Atendimento urbano em Belo Horizonte e Região Metropolitana com taxa regulamentada.";
+      }
+    }
+
+    function solicitarViaWhatsApp() {
+      const tipo = document.getElementById("tipoServico").selectedOptions[0].text;
+      const origem = document.getElementById("origem").value.trim() || "Não informada";
+      const destino = document.getElementById("destino").value.trim() || "Não informado";
+      const dataHoraRaw = document.getElementById("dataHora").value;
+      const formaPagamento = document.getElementById("formaPagamento").value;
+      const obs = document.getElementById("observacoes").value.trim() || "Nenhuma";
+
+      let dataHoraFormatada = "Imediato / A combinar";
+      if (dataHoraRaw) {
+        const d = new Date(dataHoraRaw);
+        dataHoraFormatada = d.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+      }
+
+      const mensagemWhatsApp =
+`🚖 *SOLICITAÇÃO DE MITER TÁXI CORPORATIVO*
+---------------------------------------
+📌 *Serviço:* ${tipo}
+📍 *Origem:* ${origem}
+🏁 *Destino:* ${destino}
+📅 *Data/Hora:* ${dataHoraFormatada}
+💳 *Pagamento:* ${formaPagamento}
+📝 *Obs:* ${obs}
+---------------------------------------
+_Mensagem enviada através da Central de Atendimento ao Cliente._`;
+
+      const urlWhatsApp = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensagemWhatsApp)}`;
+      window.open(urlWhatsApp, '_blank');
+    }
+
+    // Registar Service Worker dinamicamente para Suporte Offline e PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        const swCode = `
+          const CACHE_NAME = 'miter-taxi-v1';
+          self.addEventListener('install', (e) => {
+            self.skipWaiting();
+          });
+          self.addEventListener('activate', (e) => {
+            e.waitUntil(clients.claim());
+          });
+          self.addEventListener('fetch', (e) => {
+            e.respondWith(
+              fetch(e.request).catch(() => caches.match(e.request))
+            );
+          });
+        `;
+        const blob = new Blob([swCode], { type: 'application/javascript' });
+        const swUrl = URL.createObjectURL(blob);
+        navigator.serviceWorker.register(swUrl)
+          .then(() => console.log('Service Worker PWA Registado'))
+          .catch(err => console.error('Erro ao registar SW:', err));
+      });
+    }
+
+    // Evento para capturar e exibir o botão de instalação PWA
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('pwaInstallBanner').classList.remove('hidden');
+    });
+
+    function instalarPWA() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            document.getElementById('pwaInstallBanner').classList.add('hidden');
+          }
+          deferredPrompt = null;
+        });
+      }
+    }
+  </script>
+</body>
+</html> 
