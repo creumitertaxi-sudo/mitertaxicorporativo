@@ -166,7 +166,7 @@
           <button onclick="selecionarOpcaoMenu('8')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
             📄 Recibo & Nota Fiscal
           </button>
-          <button onclick="selecionarOpcaoMenu('9')" class="bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-300 hover:border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-medium shadow-sm">
+          <button onclick="selecionarOpcaoMenu('9')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1 rounded-full text-xs transition font-bold shadow-sm flex items-center gap-1">
             👤 Falar com Clenilson Miter
           </button>
         </div>
@@ -299,7 +299,7 @@ Digite o **número** ou clique no atalho para ver as informações ou realizar o
       "6": `🕒 *Como Funciona o Agendamento Prévio*\n\nO agendamento garante um veículo reservado exclusivamente no horário e local combinados.\n\nBasta clicar na opção **"🚖 Cotar & Agendar Viagem"** nos atalhos para abrir o formulário rápido de envio direto para o WhatsApp do motorista!`,
       "7": `🧳 *Bagagens e Transporte de Pets*\n\n• **Porta-malas amplo** para malas grandes, caixas de ferramentas e equipamentos corporativos.\n• **Pet Friendly:** Aceitamos animais de estimação de pequeno e médio porte (preferencialmente em caixas de transporte ou com proteção).`,
       "8": `📄 *Comprovação de Viagem*\n\nPara sua prestação de contas corporativa ou reembolso:\n• Fornecemos **recibo impresso ou digital instantâneo**.\n• Emissão de **Nota Fiscal Corporativa** do serviço.`,
-      "9": `👤 *Atendimento Direto com o Motorista*\n\nPara esclarecer dúvidas personalizadas ou falar direto com o motorista **Clenilson Miter**, chame no WhatsApp oficial: **(31) 98428-0227**.`,
+      "9": `👤 *Atendimento Direto com o Motorista*\n\nRedirecionando para o WhatsApp do motorista **Clenilson Miter**: **(31) 98428-0227**...`,
       "10": `📅 *Reserva com Antecedência*\n\nVocê pode agendar suas viagens com **dias ou semanas de antecedência** para compromissos corporativos, voos de madrugada ou viagens longas.\n\nClique no botão **"🚖 Cotar & Agendar Viagem"** para preencher os dados e realizar sua reserva!`,
       "11": `🚖 *Cotar & Agendar Viagem*\n\nAbrindo o formulário de agendamento... Por favor, preencha as informações na janela que apareceu na sua tela.`
     };
@@ -366,12 +366,31 @@ Digite o **número** ou clique no atalho para ver as informações ou realizar o
       }, 300);
     }
 
+    function redirecionarWhatsAppClenilson() {
+      const mensagemWhatsApp =
+`🚖 *ATENDIMENTO MITER TÁXI CORPORATIVO*
+---------------------------------------
+👨‍✈️ *Motorista:* Clenilson Miter
+Olá, Clenilson! Gostaria de falar com você sobre um atendimento/corrida.`;
+
+      const urlWhatsApp = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensagemWhatsApp)}`;
+      setTimeout(() => {
+        window.open(urlWhatsApp, '_blank');
+      }, 800);
+    }
+
     function processarRespostaBot(mensagem) {
       const textoLimpo = mensagem.trim().toLowerCase();
 
       if (textoLimpo === "11" || textoLimpo.includes("cotar") || textoLimpo.includes("agendar")) {
         adicionarMensagem(RESPOSTAS_MENU["11"], "bot");
         abrirModalAgendamento();
+        return;
+      }
+
+      if (textoLimpo === "9" || textoLimpo.includes("clenilson") || textoLimpo.includes("falar com clenilson")) {
+        adicionarMensagem(RESPOSTAS_MENU["9"], "bot");
+        redirecionarWhatsAppClenilson();
         return;
       }
 
@@ -396,8 +415,6 @@ Digite o **número** ou clique no atalho para ver as informações ou realizar o
         adicionarMensagem(RESPOSTAS_MENU["7"], "bot");
       } else if (textoLimpo.includes("recibo") || textoLimpo.includes("nota") || textoLimpo.includes("fiscal")) {
         adicionarMensagem(RESPOSTAS_MENU["8"], "bot");
-      } else if (textoLimpo.includes("clenilson") || textoLimpo.includes("motorista") || textoLimpo.includes("falar")) {
-        adicionarMensagem(RESPOSTAS_MENU["9"], "bot");
       } else if (textoLimpo.includes("bh") || textoLimpo.includes("bairro") || textoLimpo.includes("contagem") || textoLimpo.includes("betim")) {
         adicionarMensagem(RESPOSTAS_MENU["1"], "bot");
       } else {
@@ -466,7 +483,7 @@ _Mensagem gerada pelo aplicativo Miter Táxi Corporativo._`;
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swCode = `
-          const CACHE_NAME = 'miter-taxi-v5';
+          const CACHE_NAME = 'miter-taxi-v6';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
